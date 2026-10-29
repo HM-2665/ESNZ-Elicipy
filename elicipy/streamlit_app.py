@@ -369,7 +369,7 @@ def check_form(qst, idxs, s, ans, units, minVals, maxVals, idx_list,
 # Load environment variables from .env file
 load_dotenv()
 PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
-
+print("PASSWORD_HASH =", PASSWORD_HASH)
 
 def check_password():
     """Verify the entered password against the stored hash."""
@@ -409,7 +409,6 @@ def main():
 
         show_form()
 
-
 def show_form():
 
     hide_streamlit_style = """
@@ -418,6 +417,7 @@ def show_form():
             footer {visibility: hidden;}
             </style>
             """
+
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     st.title("Elicitation form")

@@ -1,0 +1,53 @@
+Question_Label,Calculated_Min,Calculated_Max
+Elevation of Cotopaxi,0.0,7330.0
+People living close to Guagua Pichincha,0.0,16499600.0
+Percentage of VEI4+ eruptions at Cotopaxi,0.0,87.9
+Mean area of 10 cm isopach for Plinian eruptions at Cotopaxi,1.6533012988739213,967760.6865063099
+Mean relative uncertainty of eruption duration for Layers 3-5 at Cotopaxi,0.0,100.0
+Total SO2 production from Tungurahua at 14/07/2006,0.03162277660168379,31622.776601683792
+Mean elongation direction of fallout deposits for Plinian eruption at Cotopaxi,0.0,401.0
+Volumetric percentage of andesites at Cotopaxi (last 0.5 Ma),0.0,98.5
+Average amount of ash in BF2 layer of Pululagua,0.0,100.0
+Total volume of lava flow deposits of the 2002 eruption of Reventador,19.952623149688787,5011872336.272715
+Mean difference between min-max estimation of Terminal Fall Velocity,0.0,100.0
+Mean wt% of Na2O+K2O of Guagua Pichincha products (last 55 ka years),0.0,82.4
+Mean difference between min-max estimation of plume heights for the August 2006 eruption at Tungurahua,0.0,21999.7
+Mean value of porosity for 1999 eruption of Guagua Pichincha,0.0,98.999
+"Next eruption, rhyolitic magma",0.0,98.99999
+"Next eruption, andesitic magma",0.0,100.0
+"Next eruption, rhyolitic magma, SubPlinian eruption",0.0,100.0
+"Next eruption, rhyolitic magma, Plinian eruption",0.0,100.0
+"Next eruption, rhyolitic magma, other eruption type",0.0,98.9
+"Next eruption, andesitic magma, Hydrovolcanic/Continuos ash emission eruption",0.0,100.0
+"Next eruption, andesitic magma, Violent Strombolian eruption",0.0,98.9
+"Next eruption, andesitic magma, SubPlinian eruption",0.0,98.99999
+"Next eruption, andesitic magma, Plinian eruption",0.0,98.99999
+"Next eruption, andesitic magma, other eruption type",0.0,87.99999
+"Next 100 years, rhyolitic magma",0.0,98.9999
+"Next 100 years, andesitic magma",12.1,100.0
+"Next 100 years, rhyolitic magma, SubPlinian eruption",0.0,100.0
+"Next 100 years, rhyolitic magma, Plinian eruption",0.0,100.0
+"Next 100 years, rhyolitic magma, other eruption type",0.0,100.0
+"Next 100 years, andesitic magma, Hydrovolcanic/Continuos ash emission eruption",0.0,100.0
+"Next 100 years, andesitic magma, Violent Strombolian eruption",0.0,100.0
+"Next 100 years, andesitic magma, SubPlinian eruption",0.0,100.0
+"Next 100 years, andesitic magma, Plinian eruption",0.0,98.99999
+"Next 100 years, andesitic magma, other eruption type",0.0,87.99999
+"SubPlinian rhyolitic, duration",2.335795768777456,21620.040876446736
+"SubPlinian rhyolitic, total mass fallout",0.0630957344480193,15848931924611.11
+"SubPlinian rhyolitic, average plume height",556.7841455406516,43104.67564893651
+"Plinian rhyolitic, duration",4.671591537554912,43240.08175289348
+"Plinian rhyolitic, total mass fallout",0.07645763667867127,7847482946950359.0
+"Plinian rhyolitic, average plume height",676.2433378062416,73937.88183141574
+"Hydrovolcanic/Continuos ash emission andesitic, duration",2.9278891135523564,7377328.567540282
+"Hydrovolcanic/Continuos ash emission andesitic, total mass fallout",0.07411344491069474,2698565695347.1294
+"Hydrovolcanic/Continuos ash emission andesitic, average plume height",60.198823230927665,26578.59263896684
+"Violent Strombolian andesitic, duration",2.32552032536641,21628.707971870743
+"Violent Strombolian andesitic, total mass fallout",316227.7660168379,316227766016.83795
+"Violent Strombolian andesitic, average plume height",332.01283977839626,45178.9756384477
+"SubPlinian andesitic, duration",2.2543988569266595,31937.56055135467
+"SubPlinian andesitic, total mass fallout",9772154.768272778,1934066789584.8838
+"SubPlinian andesitic, average plume height",4193.988207323748,34573.29702234114
+"Plinian andesitic, duration",3.99637345942352,68011.66176276421
+"Plinian andesitic, total mass fallout",2589787.592000072,1042556543378453.2
+"Plinian andesitic, average plume height",8705.50563296124,45947.934199881376

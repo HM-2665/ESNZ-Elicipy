@@ -68,50 +68,22 @@ def createSamples(DAT, j, W, N, logSCALE, domain, overshoot, ERF_flag):
 
 
 def max_entropy(incm, mid, incM, rA, rB):
-
-    """Produces a random sample from a maximum entropy distribution
-
-    Parameters
-    ----------
-    incm : float
-        5th percentile of the distribution
-    mid : float
-        50th percentile of the distribution
-    incM : float
-        95th percentile of the distribution
-    rA : float
-        minimum value of the distribution
-    rB : float
-        maximum value of the distribution
-
-    Returns
-    -------
-    y : float
-        random sample
-
-    This function is based on the R scripts
-    written by A.Bevilacqua
-    """
-
     import numpy as np
 
     rng = np.random.default_rng()
-    x = rng.random(1)
-    y = mid + (incM - mid) * rng.random(1)
+
+    # rng.random(1) から (1) を除いて単一の数値を生成させる
+    x = rng.random()
+    y = mid + (incM - mid) * rng.random()
 
     if x > 0.95:
-
-        y = incM + (rB - incM) * rng.random(1)
-
+        y = incM + (rB - incM) * rng.random()
     if x < 0.5:
-
-        y = incm + (mid - incm) * rng.random(1)
-
+        y = incm + (mid - incm) * rng.random()
     if x < 0.05:
+        y = rA + (incm - rA) * rng.random()
 
-        y = rA + (incm - rA) * rng.random(1)
-
-    return y
+    return float(y)  # 最後に確実に float（単一の数値）へ変換して返す
 
 
 def sampleDISCR(P, N):
@@ -237,7 +209,8 @@ def createSamplesUCA2(incm, mid, incM, W, N, logSCALE, domain, overshoot):
 
         s = int(sV[j]) - 1
 
-        C[j] = max_entropy(incm[s], mid[s], incM[s], rA, rB)
+        res_me = max_entropy(incm[s], mid[s], incM[s], rA, rB)
+        C[j] = float(np.ravel(res_me)[0])
 
         while (C[j] < DDD[0]) or (C[j] > DDD[1]):
 
@@ -433,14 +406,16 @@ def createSamplesERF(incm, mid, incM, W, N, logSCALE, domain):
     sV = sampleDISCR(W, N)
 
     for j in np.arange(N):
-
         s = int(sV[j]) - 1
 
-        C[j] = rtrian(incm[s], mid[s], incM[s])
+    # 1. 初回サンプルの生成とスカラー変換
+        res_me = max_entropy(incm[s], mid[s], incM[s], rA, rB)
+        C[j] = float(np.ravel(res_me))
 
+    # 2. 許容範囲外の場合の再サンプリング（whileループ内も同様にスカラー変換）
         while (C[j] < DDD[0]) or (C[j] > DDD[1]):
-
-            C[j] = rtrian(incm[s], mid[s], incM[s])
+            res_me = max_entropy(incm[s], mid[s], incM[s], rA, rB)
+            C[j] = float(np.ravel(res_me))
 
     if logSCALE:
 

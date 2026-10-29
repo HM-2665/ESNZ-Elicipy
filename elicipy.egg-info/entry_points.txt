@@ -1,0 +1,4 @@
+[console_scripts]
+elicipy = elicipy.cli:main
+elicipy-dashboard = elicipy.app2:run_streamlit
+elicipy-form = elicipy.app:run_streamlit

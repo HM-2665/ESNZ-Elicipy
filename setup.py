@@ -30,7 +30,8 @@ setup(
     author="Mattia de' Michieli Vitturi",
     author_email="demichie@gmail.com",
     description="A Python package for elicitation and statistical modeling",
-    long_description=open("README.md").read(),
+    #long_description=open("README.md").read(),
+    long_description=open("README.md", encoding="utf-8").read(),    
     long_description_content_type="text/markdown",
     url="https://github.com/demichie/elicipy",
     classifiers=[

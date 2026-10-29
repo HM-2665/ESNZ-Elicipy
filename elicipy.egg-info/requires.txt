@@ -1,0 +1,13 @@
+numpy
+scipy
+matplotlib
+streamlit
+click
+altair
+cryptography
+python-dotenv
+bcrypt
+streamlit-authenticator
+python-pptx
+pygithub
+plotly

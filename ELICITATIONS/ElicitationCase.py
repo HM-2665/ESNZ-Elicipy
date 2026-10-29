@@ -1,1 +1,1 @@
-wrk_dir = 'testWebform'
+wrk_dir = 'TOPAZ2_test_ja'

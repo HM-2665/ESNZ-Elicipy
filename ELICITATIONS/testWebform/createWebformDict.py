@@ -1,7 +1,7 @@
 Repository = 'testWebform'
 
 # this can be 'seed' or 'target'
-quest_type = 'seed'
+quest_type = 'target'
 
 group_list = ['Group A', 'Group B', 'Group C']
 
