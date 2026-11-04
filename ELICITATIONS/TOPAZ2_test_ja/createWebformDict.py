@@ -46,7 +46,7 @@ confirmation_email = True
 
 # 差出人・送信元アカウント情報
 SENDER_NAME = "TOPAZ2 Elicitation Team"           # 差出人表示名
-SENDER_ADDRESS = "haruko-mishina@wjec.co.jp"          # 送信元メールアドレス
+SENDER_ADDRESS = "haruko-mishina@wjecnet.onmicrosoft.com"          # 送信元メールアドレス
 SENDER_PASSWORD = "GeekomLG37"              # パスワード（※アプリパスワード等）
 
 # SMTPサーバー情報
