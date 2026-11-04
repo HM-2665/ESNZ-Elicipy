@@ -4,7 +4,7 @@ encrypted = False
 
 # select 'github', 'local' or 'local_github'
 # datarepo = 'local'
-datarepo = 'local'
+datarepo = 'local_github''
 
 # Github repository for answers, used only when datarepo='github'
 # or 'local_github'
@@ -52,3 +52,8 @@ confirmation_email = False
 # SMTPサーバー情報
 # SMTP_SERVER_ADDRESS = "smtp.office365.com"        # SMTPサーバー名
 # PORT = 587                                        # ポート番号（通常は587）
+
+
+datarepo = 'local_github'
+RepositoryData = "ESNZ-Elicipy"       # ご自身のGitHubリポジトリ名
+github_token = "ghp_xxxxxxxxxxxx"     # GitHubのPersonal Access Token
