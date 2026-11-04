@@ -4,7 +4,7 @@ encrypted = False
 
 # select 'github', 'local' or 'local_github'
 # datarepo = 'local'
-datarepo = 'local_github''
+datarepo = 'local_github'
 
 # Github repository for answers, used only when datarepo='github'
 # or 'local_github'
