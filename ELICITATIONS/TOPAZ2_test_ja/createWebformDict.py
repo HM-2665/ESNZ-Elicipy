@@ -32,7 +32,7 @@ pctls = [5, 50, 95]
 # companion_document = ""
 # supplementary_documents = [""]
 
-confirmation_email = True
+confirmation_email = False
 
 # if confirmation email is True and datarepo is 'local' or 'local_github'
 # fill the following fields, if 'github' add to streamlit
