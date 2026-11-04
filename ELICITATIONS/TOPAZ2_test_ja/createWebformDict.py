@@ -44,8 +44,11 @@ confirmation_email = False
 # SMTP_SERVER_ADDRESS
 # PORT
 
-# SENDER_ADDRESS = "haruko-mishina@wjec.co.jp"  # 送信元のメールアドレス
-# SENDER_PASSWORD = "123456"  # メールアカウントのパスワード
-# SENDER_NAME = "ELICIPY2 事務局"  # 送信者として表示される名前
-# SMTP_SERVER_ADDRESS = "smtp.office365.com"  # 例: Microsoft 365 の場合
-# PORT = 587  # 送信ポート（通常 587 または 465）
+# 差出人・送信元アカウント情報
+# SENDER_NAME = "TOPAZ2 Elicitation Team"           # 差出人表示名
+# SENDER_ADDRESS = "haruko-mishina@wjecnet.onmicrosoft.com"          # 送信元メールアドレス
+# SENDER_PASSWORD = "GeekomLG37"              # パスワード（※アプリパスワード等）
+
+# SMTPサーバー情報
+# SMTP_SERVER_ADDRESS = "smtp.office365.com"        # SMTPサーバー名
+# PORT = 587                                        # ポート番号（通常は587）
