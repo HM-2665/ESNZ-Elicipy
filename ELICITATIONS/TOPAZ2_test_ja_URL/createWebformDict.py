@@ -18,7 +18,7 @@ datarepo = 'github'
 RepositoryData = 'esnz-elicipy'
 
 # Github repository for answers, used only when datarepo='github' or 'local_github'
-RepositoryData = 'esnz-elicipy'
+RepositoryData = 'HM-2665/ESNZ-Elicipy'
 
 # this can be 'seed' or 'target'
 quest_type = 'seed'  # ※ target用のフォームの場合は 'target' にしてください
