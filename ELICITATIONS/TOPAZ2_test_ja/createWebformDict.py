@@ -55,4 +55,4 @@ confirmation_email = False
 
 
 datarepo = 'github'
-RepositoryData = 'ESNZ-Elicipy'  # リポジトリ名
+RepositoryData = 'esnz-elicipy'  # リポジトリ名
