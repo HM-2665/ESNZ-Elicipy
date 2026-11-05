@@ -54,6 +54,5 @@ confirmation_email = False
 # PORT = 587                                        # ポート番号（通常は587）
 
 
-datarepo = 'local_github'
+datarepo = 'github'
 RepositoryData = 'ESNZ-Elicipy'  # リポジトリ名
-github_token = "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"
