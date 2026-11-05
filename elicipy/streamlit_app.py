@@ -422,9 +422,15 @@ def show_form():
 
     st.title("Elicitation form")
 
+    # カレントディレクトリの取得と ELICITATIONS パスの2重化防止
     current_path = os.getcwd()
+    if current_path.endswith('ELICITATIONS'):
+        base_dir = os.path.dirname(current_path)
+        path = current_path
+    else:
+        base_dir = current_path
+        path = os.path.join(current_path, 'ELICITATIONS')
 
-    path = current_path + '/ELICITATIONS'
     os.chdir(path)
     print('Path: ', path)
     sys.path.append(path)
@@ -432,33 +438,23 @@ def show_form():
     elicitation_list = next(os.walk(path))
 
     if len(elicitation_list[1]) == 1:
-
         wrk_dir = elicitation_list[1][0]
-
     else:
-
         try:
-
             from ElicitationCase import wrk_dir
-
         except ImportError:
-
-            filename = path + '/ElicitationCase.py'
+            filename = os.path.join(path, 'ElicitationCase.py')
             isExist = os.path.exists(filename)
-
             if isExist:
-
                 print('Please add wrk_dir to ElicitationCase.py')
-
             else:
-
                 print('Please create file ElicitationCase.py with wrk_dir')
 
-    path = current_path + '/ELICITATIONS/' + wrk_dir
+    path = os.path.join(path, wrk_dir)
     print('Path: ', path)
     sys.path.append(path)
 
-    os.chdir(current_path)
+    os.chdir(base_dir)
 
     from createWebformDict import quest_type
 
