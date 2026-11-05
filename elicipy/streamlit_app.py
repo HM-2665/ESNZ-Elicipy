@@ -637,10 +637,13 @@ def show_form():
 
         print('checkin for problems in answers')
 
-        check_flag = check_form(qst, idxs, labels, ans, units, minVals,
-                                maxVals, idx_list, idxMins, idxMaxs, sum50s,
-                                questions, label_flag, labels)
-
+        try:
+            check_flag = check_form(qst, idxs, labels, ans, units, minVals,
+                                    maxVals, idx_list, idxMins, idxMaxs, sum50s,
+                                    questions, label_flag, labels)
+        except Exception as e:
+            st.error(f"入力形式のチェック中にエラーが発生しました: {e}")
+            check_flag = False
         print('check_flag', check_flag)
 
         if not agree:
