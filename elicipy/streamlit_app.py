@@ -136,12 +136,11 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     g = Github(auth=auth)
 
     try:
-        # 'owner/repo' 形式でない場合はログインユーザー名から補正
+        # リポジトリの取得（HM-2665/ESNZ-Elicipy 対応）
         if '/' in RepositoryData:
             repo = g.get_repo(RepositoryData)
         else:
-            user_login = g.get_user().login
-            repo = g.get_repo(f"{user_login}/{RepositoryData}")
+            repo = g.get_repo(f"HM-2665/{RepositoryData}")
     except Exception as e:
         print('Repository not found: ', RepositoryData, e)
         st.error(f"GitHubリポジトリ '{RepositoryData}' が見つかりません: {e}")
@@ -150,16 +149,16 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     now = datetime.now()
     dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
 
-    # Upload to github
+    # Upload to github（先頭の './' を除去して GitHub API の 404 を回避）
     git_prefix = quest_type + '/'
+
     git_file = git_prefix + \
         csv_file.replace('.csv', '_') + dt_string + '_Output.csv'
     df2 = df_new.to_csv(sep=',', index=False)
 
     try:
-        # デフォルトブランチ（main / master）を自動取得して書き込み
-        target_branch = repo.default_branch
-        repo.create_file(git_file, "committing files", df2, branch=target_branch)
+        print('Committing file: ', git_file)
+        repo.create_file(git_file, "committing files", df2, branch="main")
         st.write(git_file + ' CREATED')
         print(git_file + ' CREATED')
     except Exception as e:
@@ -167,7 +166,6 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
         st.error(f"GitHubへのファイル保存に失敗しました: {e}")
 
     return git_file
-
 # Load environment variables from .env file
 load_dotenv()
 PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
