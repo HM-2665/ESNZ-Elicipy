@@ -136,7 +136,7 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     g = Github(auth=auth)
 
     try:
-        # リポジトリの取得（HM-2665/ESNZ-Elicipy 対応）
+        # リポジトリ名の自動補正（HM-2665/ESNZ-Elicipy）
         if '/' in RepositoryData:
             repo = g.get_repo(RepositoryData)
         else:
@@ -149,16 +149,15 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     now = datetime.now()
     dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
 
-    # Upload to github（先頭の './' を除去して GitHub API の 404 を回避）
+    # Upload to github（先頭の './' を除去して 404 を回避）
     git_prefix = quest_type + '/'
-
-    git_file = git_prefix + \
-        csv_file.replace('.csv', '_') + dt_string + '_Output.csv'
+    git_file = git_prefix + csv_file.replace('.csv', '_') + dt_string + '_Output.csv'
     df2 = df_new.to_csv(sep=',', index=False)
 
     try:
-        print('Committing file: ', git_file)
-        repo.create_file(git_file, "committing files", df2, branch="main")
+        # 実際のデフォルトブランチ（main / master）を自動取得
+        target_branch = repo.default_branch
+        repo.create_file(git_file, "committing files", df2, branch=target_branch)
         st.write(git_file + ' CREATED')
         print(git_file + ' CREATED')
     except Exception as e:
@@ -166,6 +165,7 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
         st.error(f"GitHubへのファイル保存に失敗しました: {e}")
 
     return git_file
+
 # Load environment variables from .env file
 load_dotenv()
 PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
