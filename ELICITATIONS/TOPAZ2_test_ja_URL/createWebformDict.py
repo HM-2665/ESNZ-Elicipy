@@ -17,11 +17,11 @@ label_flag = True
 pctls = [5, 50, 95]
 
 # メール送信機能の有効化
-confirmation_email = True
+confirmation_email = False
 
 # 送信元（メールサーバー）の設定
-SENDER_ADDRESS = "haruko-mishina@wjecnet.onmicrosoft.com"
-SENDER_PASSWORD = "LGgeekom37"
-SENDER_NAME = "事務局"
-SMTP_SERVER_ADDRESS = "[suspicious link removed]"
-PORT = 587
+# SENDER_ADDRESS = "haruko-mishina@wjecnet.onmicrosoft.com"
+# SENDER_PASSWORD = "LGgeekom37"
+# SENDER_NAME = "事務局"
+# SMTP_SERVER_ADDRESS = "[suspicious link removed]"
+# PORT = 587
