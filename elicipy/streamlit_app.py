@@ -128,42 +128,78 @@ def convert_df(df):
 def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
 
     if datarepo == 'github':
+
         auth = Auth.Token(st.secrets["github_token"])
+
     elif datarepo == 'local_github':
+
         from createWebformDict import github_token
         auth = Auth.Token(github_token)
 
     g = Github(auth=auth)
 
+    print('RepositoryData', RepositoryData)
+
     try:
-        # リポジトリ取得（HM-2665/ESNZ-Elicipy）
-        repo = g.get_repo("HM-2665/ESNZ-Elicipy")
-    except Exception as e:
-        st.error(f"GitHubリポジトリが見つかりません: {e}")
-        return None
+
+        repo = g.get_user().get_repo(RepositoryData)
+
+    except Exception:
+
+        print('Repository not found: ', RepositoryData)
 
     now = datetime.now()
     dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
 
-    # パス頭の './' を完全除去（404エラー回避）
-    git_file = f"{quest_type}/{csv_file.replace('.csv', '_')}{dt_string}_Output.csv"
+    # Upload to github
+    git_prefix = './' + quest_type + '/'
+
+    git_file = git_prefix + \
+        csv_file.replace('.csv', '_')+dt_string+'_Output.csv'
     df2 = df_new.to_csv(sep=',', index=False)
 
     try:
-        # 実際のデフォルトブランチ（main / master）を自動取得して書き込み
-        target_branch = repo.default_branch
-        repo.create_file(git_file, "committing files", df2, branch=target_branch)
+
+        print('Committing file: ', git_file)
+        repo.create_file(git_file, "committing files", df2, branch="main")
         st.write(git_file + ' CREATED')
         print(git_file + ' CREATED')
-    except Exception as e:
-        st.error(f"GitHubへのファイル保存に失敗しました: {e}")
+
+    except Exception:
+
+        print('Problem committing file')
 
     return git_file
 
-# Load environment variables from .env file
-load_dotenv()
-PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
-print("PASSWORD_HASH =", PASSWORD_HASH)
+
+def saveAnswer(df_new, input_dir, csv_file, quest_type):
+
+    output_dir = input_dir + '/' + quest_type
+    # Check whether the specified output path exists or not
+    isExist = os.path.exists(output_dir)
+
+    if not isExist:
+
+        # Create a new directory because it does not exist
+        os.makedirs(output_dir)
+        print('The new directory ' + output_dir + ' is created!')
+
+    now = datetime.now()
+    dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
+
+    # Local save
+    save_prefix = output_dir + '/'
+
+    save_file = save_prefix + \
+        csv_file.replace('.csv', '_')+dt_string+'_Output.csv'
+    # save_file = csv_file.replace('.csv','_')+dt_string+'_Output.csv'
+
+    df_new.to_csv(save_file, sep=',', index=False)
+
+    st.write(save_file + ' SAVED')
+
+    return csv_file.replace('.csv', '_') + dt_string + '_Output.csv'
+
 
 def check_form(qst, idxs, s, ans, units, minVals, maxVals, idx_list,
                idxMins, idxMaxs, sum50s, questions, label_flag, labels):
@@ -171,65 +207,169 @@ def check_form(qst, idxs, s, ans, units, minVals, maxVals, idx_list,
     print(ans[0:3])
 
     n_qst = int((len(qst) - 2) / 3)
+
     check_flag = True
 
     for i in range(n_qst):
+
         if idxs[i] in idx_list:
+
             idx = 3 + i * 3
 
-            # カンマチェック
-            if isinstance(ans[idx], str) and ',' in ans[idx]:
-                msg_target = labels[i] if label_flag else str(idxs[i])
-                st.markdown(f'**Error in question {msg_target}**')
+            if (',' in ans[idx]):
+
+                if label_flag:
+                    st.markdown('**Error in question ' + labels[i] + '**')
+                else:
+                    st.markdown('**Error in question ' + str(idxs[i]) + '**')
+
                 st.write('Please remove comma')
                 st.write(qst[idx], ans[idx])
                 check_flag = False
 
-            # 数値変換の安全チェック
-            val1, val2, val3 = None, None, None
             try:
-                val1 = float(ans[idx])
-            except (ValueError, TypeError):
-                msg_target = labels[i] if label_flag else str(idxs[i])
-                st.markdown(f'**Error in question {msg_target}**')
+                float(ans[idx])
+            except ValueError:
+
+                if label_flag:
+                    st.markdown('**Error in question ' + labels[i] + '**')
+                else:
+                    st.markdown('**Error in question ' + str(idxs[i]) + '**')
+
                 st.write('Non numeric answer')
                 st.write(qst[idx], ans[idx])
                 check_flag = False
 
             try:
-                val2 = float(ans[idx + 1])
-            except (ValueError, TypeError):
-                msg_target = labels[i] if label_flag else str(idxs[i])
-                st.markdown(f'**Error in question {msg_target}**')
+                float(ans[idx + 1])
+            except ValueError:
+
+                if label_flag:
+                    st.markdown('**Error in question ' + labels[i] + '**')
+                else:
+                    st.markdown('**Error in question ' + str(idxs[i]) + '**')
+
                 st.write('Non numeric answer')
                 st.write(qst[idx + 1], ans[idx + 1])
                 check_flag = False
 
             try:
-                val3 = float(ans[idx + 2])
-            except (ValueError, TypeError):
-                msg_target = labels[i] if label_flag else str(idxs[i])
-                st.markdown(f'**Error in question {msg_target}**')
+                float(ans[idx + 2])
+            except ValueError:
+
+                if label_flag:
+                    st.markdown('**Error in question ' + labels[i] + '**')
+                else:
+                    st.markdown('**Error in question ' + str(idxs[i]) + '**')
+
                 st.write('Non numeric answer')
                 st.write(qst[idx + 2], ans[idx + 2])
                 check_flag = False
 
-            # 全て数値変換できた場合のみ比較
-            if val1 is not None and val2 is not None and val3 is not None:
-                if val1 >= val2:
-                    msg_target = labels[i] if label_flag else str(idxs[i])
-                    st.markdown(f'**Error in question {msg_target}**')
-                    st.write(f'{qst[idx]} >= {qst[idx + 1]}')
+            if check_flag:
+
+                if float(ans[idx]) >= float(ans[idx + 1]):
+
+                    if label_flag:
+                        st.markdown('**Error in question ' + labels[i] + '**')
+                    else:
+                        st.markdown('**Error in question ' + str(idxs[i]) +
+                                    '**')
+
+                    st.write(qst[idx] + ' >= ' + qst[idx + 1])
                     check_flag = False
 
-                if val2 >= val3:
-                    msg_target = labels[i] if label_flag else str(idxs[i])
-                    st.markdown(f'**Error in question {msg_target}**')
-                    st.write(f'{qst[idx + 1]} >= {qst[idx + 2]}')
+                if float(ans[idx + 1]) >= float(ans[idx + 2]):
+
+                    if label_flag:
+                        st.markdown('**Error in question ' + labels[i] + '**')
+                    else:
+                        st.markdown('**Error in question ' + str(idxs[i]) +
+                                    '**')
+
+                    st.write(qst[idx + 1] + ' >= ' + qst[idx + 2])
                     check_flag = False
+
+                if float(ans[idx]) <= minVals[i] or float(
+                        ans[idx]) >= maxVals[i]:
+
+                    if label_flag:
+                        st.markdown('**Error in question ' + labels[i] + '**')
+                    else:
+                        st.markdown('**Error in question ' + str(idxs[i]) +
+                                    '**')
+
+                    st.write(qst[idx] + ':' + str(ans[idx]))
+                    st.write('The answer must be a value >' + str(minVals[i]) +
+                             ' and  <' + str(maxVals[i]))
+                    check_flag = False
+
+                if float(ans[idx + 1]) <= minVals[i] or float(
+                        ans[idx + 1]) >= maxVals[i]:
+
+                    if label_flag:
+                        st.markdown('**Error in question ' + labels[i] + '**')
+                    else:
+                        st.markdown('**Error in question ' + str(idxs[i]) +
+                                    '**')
+
+                    st.write(qst[idx + 1] + ':' + str(ans[idx + 1]))
+                    st.write('The answer must be a value  >' +
+                             str(minVals[i]) + ' and <' + str(maxVals[i]))
+                    check_flag = False
+
+                if float(ans[idx + 2]) <= minVals[i] or float(
+                        ans[idx + 2]) >= maxVals[i]:
+
+                    if label_flag:
+                        st.markdown('**Error in question ' + labels[i] + '**')
+                    else:
+                        st.markdown('**Error in question ' + str(idxs[i]) +
+                                    '**')
+
+                    st.write(qst[idx + 2] + ':' + str(ans[idx + 2]))
+                    st.write('The answer must be a value >' + str(minVals[i]) +
+                             ' and <' + str(maxVals[i]))
+                    check_flag = False
+
+                if (idxMins[i] < idxMaxs[i]):
+
+                    sum50check = 0.0
+
+                    for ii in range(idxMins[i] - 1, idxMaxs[i]):
+
+                        sum50check += float(ans[4 + ii * 3])
+
+                    if float(sum50s[i] != sum50check):
+
+                        if label_flag:
+
+                            labelIdxMin = idxs.index(idxMins[i])
+                            labelIdxMax = idxs.index(idxMaxs[i])
+
+                            st.markdown('**Error in question ' + labels[i] +
+                                        '**')
+                            st.write(
+                                'Error in sum of 50%iles for questions from ',
+                                labels[labelIdxMin], ' to ',
+                                labels[labelIdxMax])
+
+                        else:
+                            st.markdown('**Error in question ' + str(idxs[i]) +
+                                        '**')
+                            st.write(
+                                'Error in sum of 50%iles for questions from ',
+                                idxMins[i], ' to ', idxMaxs[i])
+                        st.write('The sum should be ' + str(sum50s[i]))
+                        check_flag = False
 
     return check_flag
 
+
+# Load environment variables from .env file
+load_dotenv()
+PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
+print("PASSWORD_HASH =", PASSWORD_HASH)
 
 def check_password():
     """Verify the entered password against the stored hash."""
@@ -695,13 +835,10 @@ def show_form():
 
         print('checkin for problems in answers')
 
-        try:
-            check_flag = check_form(qst, idxs, labels, ans, units, minVals,
-                                    maxVals, idx_list, idxMins, idxMaxs, sum50s,
-                                    questions, label_flag, labels)
-        except Exception as e:
-            st.error(f"入力形式のチェック中にエラーが発生しました: {e}")
-            check_flag = False
+        check_flag = check_form(qst, idxs, labels, ans, units, minVals,
+                                maxVals, idx_list, idxMins, idxMaxs, sum50s,
+                                questions, label_flag, labels)
+
         print('check_flag', check_flag)
 
         if not agree:

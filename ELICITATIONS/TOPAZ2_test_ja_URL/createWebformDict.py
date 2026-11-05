@@ -3,7 +3,7 @@ password_protected = False
 encrypted = False
 
 # select 'github', 'local' or 'local_github'
-datarepo = 'github'
+datarepo = 'local'
 
 # Github repository for answers, used only when datarepo='github' or 'local_github'
 RepositoryData = 'esnz-elicipy'
