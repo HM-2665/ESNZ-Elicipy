@@ -55,5 +55,5 @@ confirmation_email = False
 
 
 datarepo = 'local_github'
-RepositoryData = "ESNZ-Elicipy"       # ご自身のGitHubリポジトリ名
-github_token = "ghp_xxxxxxxxxxxx"     # GitHubのPersonal Access Token
+RepositoryData = 'ESNZ-Elicipy'  # リポジトリ名
+github_token = "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"
