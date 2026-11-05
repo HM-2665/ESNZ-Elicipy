@@ -135,33 +135,27 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
 
     g = Github(auth=auth)
 
-    # 1. リポジトリの正確な取得方法へ修正
     try:
-        if '/' in RepositoryData:
-            repo = g.get_repo(RepositoryData)
-        else:
-            repo = g.get_repo(f"HM-2665/{RepositoryData}")
+        # リポジトリ取得（HM-2665/ESNZ-Elicipy）
+        repo = g.get_repo("HM-2665/ESNZ-Elicipy")
     except Exception as e:
-        print('Repository not found: ', RepositoryData, e)
-        st.error(f"GitHubリポジトリ '{RepositoryData}' が見つかりません: {e}")
+        st.error(f"GitHubリポジトリが見つかりません: {e}")
         return None
 
     now = datetime.now()
     dt_string = now.strftime("%Y_%m_%d_%H_%M_%S")
 
-    # 2. パス先頭の './' を完全に除去して 404 を回避
-    git_prefix = quest_type + '/'
-    git_file = git_prefix + csv_file.replace('.csv', '_') + dt_string + '_Output.csv'
+    # パス頭の './' を完全除去（404エラー回避）
+    git_file = f"{quest_type}/{csv_file.replace('.csv', '_')}{dt_string}_Output.csv"
     df2 = df_new.to_csv(sep=',', index=False)
 
-    # 3. デフォルトブランチ（main / master）を自動判定して保存
     try:
+        # 実際のデフォルトブランチ（main / master）を自動取得して書き込み
         target_branch = repo.default_branch
         repo.create_file(git_file, "committing files", df2, branch=target_branch)
         st.write(git_file + ' CREATED')
         print(git_file + ' CREATED')
     except Exception as e:
-        print('Problem committing file:', e)
         st.error(f"GitHubへのファイル保存に失敗しました: {e}")
 
     return git_file
