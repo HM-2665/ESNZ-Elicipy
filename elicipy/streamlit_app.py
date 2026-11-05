@@ -138,7 +138,10 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     print('RepositoryData', RepositoryData)
 
     try:
-        repo = g.get_user().get_repo(RepositoryData)
+        if '/' in RepositoryData:
+            repo = g.get_repo(RepositoryData)
+        else:
+            repo = g.get_user().get_repo(RepositoryData)
     except Exception as e:
         print('Repository not found: ', RepositoryData, e)
         st.error(f"GitHubリポジトリ '{RepositoryData}' が見つかりません: {e}")
@@ -155,8 +158,10 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
     df2 = df_new.to_csv(sep=',', index=False)
 
     try:
-        print('Committing file: ', git_file)
-        repo.create_file(git_file, "committing files", df2, branch="main")
+        # 対象リポジトリの実際のデフォルトブランチ（main または master）を取得
+        target_branch = repo.default_branch
+        print('Committing file: ', git_file, ' to branch: ', target_branch)
+        repo.create_file(git_file, "committing files", df2, branch=target_branch)
         st.write(git_file + ' CREATED')
         print(git_file + ' CREATED')
     except Exception as e:
@@ -164,7 +169,6 @@ def pushToGithub(RepositoryData, df_new, csv_file, quest_type, datarepo):
         st.error(f"GitHubへのファイル保存に失敗しました: {e}")
 
     return git_file
-
 def saveAnswer(df_new, input_dir, csv_file, quest_type):
 
     output_dir = input_dir + '/' + quest_type
