@@ -173,6 +173,72 @@ load_dotenv()
 PASSWORD_HASH = os.getenv("PASSWORD_HASH")  # Read the stored password hash
 print("PASSWORD_HASH =", PASSWORD_HASH)
 
+def check_form(qst, idxs, s, ans, units, minVals, maxVals, idx_list,
+               idxMins, idxMaxs, sum50s, questions, label_flag, labels):
+
+    print(ans[0:3])
+
+    n_qst = int((len(qst) - 2) / 3)
+    check_flag = True
+
+    for i in range(n_qst):
+        if idxs[i] in idx_list:
+            idx = 3 + i * 3
+
+            # カンマチェック
+            if isinstance(ans[idx], str) and ',' in ans[idx]:
+                msg_target = labels[i] if label_flag else str(idxs[i])
+                st.markdown(f'**Error in question {msg_target}**')
+                st.write('Please remove comma')
+                st.write(qst[idx], ans[idx])
+                check_flag = False
+
+            # 数値変換の安全チェック
+            val1, val2, val3 = None, None, None
+            try:
+                val1 = float(ans[idx])
+            except (ValueError, TypeError):
+                msg_target = labels[i] if label_flag else str(idxs[i])
+                st.markdown(f'**Error in question {msg_target}**')
+                st.write('Non numeric answer')
+                st.write(qst[idx], ans[idx])
+                check_flag = False
+
+            try:
+                val2 = float(ans[idx + 1])
+            except (ValueError, TypeError):
+                msg_target = labels[i] if label_flag else str(idxs[i])
+                st.markdown(f'**Error in question {msg_target}**')
+                st.write('Non numeric answer')
+                st.write(qst[idx + 1], ans[idx + 1])
+                check_flag = False
+
+            try:
+                val3 = float(ans[idx + 2])
+            except (ValueError, TypeError):
+                msg_target = labels[i] if label_flag else str(idxs[i])
+                st.markdown(f'**Error in question {msg_target}**')
+                st.write('Non numeric answer')
+                st.write(qst[idx + 2], ans[idx + 2])
+                check_flag = False
+
+            # 全て数値変換できた場合のみ比較
+            if val1 is not None and val2 is not None and val3 is not None:
+                if val1 >= val2:
+                    msg_target = labels[i] if label_flag else str(idxs[i])
+                    st.markdown(f'**Error in question {msg_target}**')
+                    st.write(f'{qst[idx]} >= {qst[idx + 1]}')
+                    check_flag = False
+
+                if val2 >= val3:
+                    msg_target = labels[i] if label_flag else str(idxs[i])
+                    st.markdown(f'**Error in question {msg_target}**')
+                    st.write(f'{qst[idx + 1]} >= {qst[idx + 2]}')
+                    check_flag = False
+
+    return check_flag
+
+
 def check_password():
     """Verify the entered password against the stored hash."""
     if "authenticated" not in st.session_state:
