@@ -14,11 +14,10 @@ password_protected = False
 encrypted = False
 
 # select 'github', 'local' or 'local_github'
-datarepo = 'github'
-RepositoryData = 'esnz-elicipy'
+datarepo = 'local'
 
 # Github repository for answers, used only when datarepo='github' or 'local_github'
-RepositoryData = 'HM-2665/ESNZ-Elicipy'
+RepositoryData = 'ESNZ-Elicipy'
 
 # this can be 'seed' or 'target'
 quest_type = 'seed'  # ※ target用のフォームの場合は 'target' にしてください
