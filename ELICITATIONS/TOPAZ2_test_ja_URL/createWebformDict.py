@@ -16,12 +16,12 @@ label_flag = True
 
 pctls = [5, 50, 95]
 
-confirmation_email = False
+# メール送信機能の有効化
+confirmation_email = True
 
-# if confirmation email is True and datarepo is 'local' or 'local_github'
-# fill the following fields, if 'github' add to streamlit secrets
-# SENDER_ADDRESS = ""
-# SENDER_PASSWORD = ""
-# SENDER_NAME = ""
-# SMTP_SERVER_ADDRESS = ""
-# PORT = 587
+# 送信元（メールサーバー）の設定
+SENDER_ADDRESS = "haruko-mishina@wjecnet.onmicrosoft.com"
+SENDER_PASSWORD = "LGgeekom37"
+SENDER_NAME = "事務局"
+SMTP_SERVER_ADDRESS = "[suspicious link removed]"
+PORT = 587
