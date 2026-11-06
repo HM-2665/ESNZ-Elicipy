@@ -3,7 +3,9 @@ password_protected = False
 encrypted = False
 
 # select 'github', 'local' or 'local_github'
-datarepo = 'local'
+# 'local' から 'github' に変更
+datarepo = 'github'
+RepositoryData = 'HM-2665/ESNZ-Elicipy'
 
 # Github repository for answers, used only when datarepo='github' or 'local_github'
 RepositoryData = 'HM-2665/ESNZ-Elicipy'
